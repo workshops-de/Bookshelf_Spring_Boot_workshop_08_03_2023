@@ -1,12 +1,15 @@
 package de.workshops.bookshelf.book;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,6 +31,18 @@ class BookRestControllerIntegrationTest {
 
     @Autowired
     private BookRestController bookRestController;
+
+    @TestConfiguration
+    static class JacksonTestConfiguration {
+
+        @Bean
+        public ObjectMapper mapper() {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+            return mapper;
+        }
+    }
 
     @Test
     void getAllBooks() throws Exception {
