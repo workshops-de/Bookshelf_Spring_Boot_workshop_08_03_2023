@@ -16,6 +16,6 @@ class BookshelfApplicationTests {
 	@Test
 	void contextLoads() {
 		assertEquals(11, bookshelfProperties.getSomeNumber());
-		assertEquals("More information", bookshelfProperties.getSomeText());
+		assertEquals("Hello world!", bookshelfProperties.getSomeText());
 	}
 }

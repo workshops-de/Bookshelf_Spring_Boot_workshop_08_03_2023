@@ -1,16 +1,10 @@
 package de.workshops.bookshelf.book;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -20,7 +14,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Book {
 
     @Id
@@ -30,13 +26,14 @@ public class Book {
     @NotBlank
     private String title;
 
+    @Column(length = 1000)
     private String description;
 
     @NotBlank
     private String author;
 
     @NotBlank
-    @Size(min = 10, max = 13)
+    @Size(min = 10, max = 14)
     private String isbn;
 
     @Override

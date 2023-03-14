@@ -12,8 +12,7 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public List<Book> getBooks() throws BookException {
-        List<Book> bookList = bookRepository.getBooks();
-
+        List<Book> bookList = bookRepository.findAll();
         if (bookList.isEmpty()) {
             throw new BookException();
         }
@@ -22,22 +21,19 @@ public class BookService {
     }
 
     public Book getSingleBook(String isbn) throws BookException {
-        return bookRepository
-                .getBooks()
+        return getBooks()
                 .stream()
                 .filter(book -> hasIsbn(book, isbn)).findFirst().orElseThrow(BookException::new);
     }
 
     public Book searchBookByAuthor(String author) throws BookException {
-        return bookRepository
-                .getBooks()
+        return getBooks()
                 .stream()
                 .filter(book -> hasAuthor(book, author)).findFirst().orElseThrow(BookException::new);
     }
 
     public List<Book> searchBooks(BookSearchRequest request) throws BookException {
-        List<Book> bookList = bookRepository
-                .getBooks()
+        List<Book> bookList = getBooks()
                 .stream()
                 .filter(book -> hasAuthor(book, request.author()))
                 .filter(book -> hasIsbn(book, request.isbn()))
@@ -51,7 +47,7 @@ public class BookService {
     }
 
     public Book createBook(Book book) {
-        return bookRepository.createBook(book);
+        return bookRepository.save(book);
     }
 
     private boolean hasIsbn(Book book, String isbn) {

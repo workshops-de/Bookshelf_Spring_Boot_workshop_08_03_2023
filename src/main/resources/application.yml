@@ -7,18 +7,28 @@ bookshelf:
   some-text: 'Hello world!'
 
 spring:
+  security:
+    user:
+      name: workshops
+      password: secret
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: password
+    url: jdbc:postgresql://roasted-tomato.db.elephantsql.com:5432/ooqpwbmi # adapt URL to your database
+    driver-class-name: org.postgresql.Driver
+    username: ooqpwbmi # adapt username accordingly
+    # set PG_PASSWORD in your environment, e.g., by running "export PG_PASSWORD=..." in the command line
+    password: ${PG_PASSWORD}
+    hikari:
+      maximum-pool-size: 1 # disabling concurrent connections due to free plan limitations
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
-    # generate-ddl: true # equivalent to spring.jpa.hibernate.ddl-auto=update
     hibernate:
       # Re-generating the DDL upon each application start to account for data model changes.
-      ddl-auto: create-drop
-  h2:
-    console:
-      enabled: true
+      ddl-auto: validate
+  liquibase:
+    drop-first: true
+  sql:
+    init:
+      # The default value is 'embedded', which only works for in-memory databases.
+      # Since we're using a 'non-embedded' database here, we now need to set this to 'always'.
+      mode: always

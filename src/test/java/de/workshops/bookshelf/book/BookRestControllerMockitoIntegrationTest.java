@@ -25,7 +25,7 @@ class BookRestControllerMockitoIntegrationTest {
 
     @Test
     void getAllBooks() throws Exception {
-        Mockito.when(bookRepository.getBooks()).thenReturn(Collections.emptyList());
+        Mockito.when(bookRepository.findAll()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/book"))
                 .andDo(MockMvcResultHandlers.print())
