@@ -17,8 +17,6 @@ spring:
     username: ooqpwbmi # adapt username accordingly
     # set PG_PASSWORD in your environment, e.g., by running "export PG_PASSWORD=..." in the command line
     password: ${PG_PASSWORD}
-    hikari:
-      maximum-pool-size: 1 # disabling concurrent connections due to free plan limitations
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
@@ -32,3 +30,13 @@ spring:
       # The default value is 'embedded', which only works for in-memory databases.
       # Since we're using a 'non-embedded' database here, we now need to set this to 'always'.
       mode: always
+
+  test:
+    database:
+      replace: none
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

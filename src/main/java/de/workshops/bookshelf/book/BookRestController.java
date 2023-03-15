@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class BookRestController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public Book createBook(@RequestBody Book book) {
         return bookService.createBook(book);
     }
